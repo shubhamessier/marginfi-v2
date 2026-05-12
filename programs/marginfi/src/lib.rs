@@ -513,6 +513,12 @@ pub mod marginfi {
         marginfi_account::close_account(ctx)
     }
 
+    /// (permissionless) Close an account that is empty, inactive for >60 days, and has no
+    /// blocking state flags. Rent is returned to the group's global fee wallet.
+    pub fn admin_close_account(ctx: Context<AdminCloseAccount>) -> MarginfiResult {
+        marginfi_account::admin_close_account(ctx)
+    }
+
     /// (Permissionless) Refresh the internal risk engine health cache. Useful for liquidators and
     /// other consumers that want to see the internal risk state of a user account. This cache is
     /// read-only and serves no purpose except being populated by this ix.
@@ -522,6 +528,14 @@ pub mod marginfi {
         ctx: Context<'_, '_, 'info, 'info, PulseHealth<'info>>,
     ) -> MarginfiResult {
         marginfi_account::lending_account_pulse_health(ctx)
+    }
+
+    /// (Permissionless) Batch-sync balance-derived indexer flags for existing accounts.
+    /// Pass MarginfiAccounts as writable remaining_accounts.
+    pub fn sync_indexer_flags<'info>(
+        ctx: Context<'_, '_, 'info, 'info, SyncIndexerFlags<'info>>,
+    ) -> MarginfiResult {
+        marginfi_account::sync_indexer_flags(ctx)
     }
 
     /// (Permissionless) Refresh the cached oracle price for a bank.
