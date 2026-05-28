@@ -204,7 +204,11 @@ pub fn drift_withdraw<'info>(
 
         marginfi_account.last_update = clock.unix_timestamp as u64;
 
-        (token_amount, expected_scaled_balance_change, asset_shares_delta)
+        (
+            token_amount,
+            expected_scaled_balance_change,
+            asset_shares_delta,
+        )
     };
 
     // When calling withdraw_all, it's possible that the remaining scaled balance is worth less than
